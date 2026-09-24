@@ -14,8 +14,12 @@ Adds changes from my working folder to the staging area, where I choose
 what goes into the next commit. It takes a snapshot of the file as it is
 right now, so if I edit the file again, I need to `git add` it again.
 
-- `git add <file>` stages one file
+- `git add <file>` stages only that file, e.g. `git add index.html`;
+  other changed files are left unstaged
 - `git add .` stages every changed and new file in the folder nnnn
+
+After `git add`, `git status` shows the staged files in green under
+"Changes to be committed".
 
 ### git commit -m "message"
 Commiting what's on the stagging area and leaves a message
@@ -37,3 +41,26 @@ I only need `-u` the first time. After that, a plain `git push` or
 or behind GitHub.
 
 Only commits are pushed. Changes I haven't committed stay on my computer.
+
+### git remote add origin <url>
+Connects my local repository to a repository on GitHub.
+`origin` is a nickname for the GitHub URL, so later commands can say
+`origin` instead of typing the whole address.
+
+It only saves the connection. Nothing is uploaded until I `git push`.
+I only need to do it once per repository. (`git clone` sets up origin
+automatically.)
+
+- `git remote -v` shows which URL origin points to
+- `git remote set-url origin <new-url>` changes it
+
+### echo "text" > file
+Not a Git command, but a terminal (Git Bash) command I use to create files.
+`echo` prints the text, and `>` sends it into a file instead of the screen.
+
+- `echo "<h1>My Git Workshop</h1>" > index.html` creates index.html with that line
+- `>` creates the file, or **replaces** everything in it if it already exists
+- `>>` **adds** the text as a new line at the end of the file instead
+
+Keep the quotes around the text, or characters like `<`, `>` and `;` are read
+as terminal commands instead of text.
