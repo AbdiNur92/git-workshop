@@ -64,3 +64,14 @@ Not a Git command, but a terminal (Git Bash) command I use to create files.
 
 Keep the quotes around the text, or characters like `<`, `>` and `;` are read
 as terminal commands instead of text.
+
+### git diff
+Shows the difference between my working folder (the files as they are now)
+and the staging area (what I last `git add`-ed). If I haven't staged anything
+since the last commit, that means everything I've changed since that commit.
+
+- Lines starting with `+` (green) were added, lines with `-` (red) were removed
+- Only unstaged changes show up. Once I `git add` a file, its changes disappear
+  from `git diff`
+- `git diff --staged` shows what IS staged instead: the difference between the
+  staging area and the last commit (what the next commit will contain)

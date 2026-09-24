@@ -1,1 +1,2 @@
 Things I learned about Git
+- A commit is a snapshot with a message
