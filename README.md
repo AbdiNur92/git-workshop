@@ -155,3 +155,45 @@ folder named after the repository. The original on GitHub stays as it is.
 - It sets up `origin` automatically, pointing at the URL I cloned from
 - Files that were ignored by .gitignore never get committed, so they are never
   on GitHub and don't come with the clone
+
+### git switch -c <branch>
+Creates a new branch and moves me onto it. A branch is a movable label on a
+commit: it copies no files, and each new commit I make moves the label forward.
+Working on a branch keeps `main` unchanged until I merge the branch back in.
+
+- `git switch <branch>` moves between existing branches; Git swaps the files in
+  my folder to match that branch
+- Older notes write `git checkout -b <branch>`, which does the same thing
+- A branch is not a clone: all branches live in the same repository and folder,
+  while a clone is a complete separate copy of the repository
+
+### git branch
+Lists the branches in my repository. The one marked with `*` is the branch
+I'm on right now.
+
+- Example: `* add-about` and `main` means both branches exist and I'm on
+  add-about
+- It only lists my local branches. `git branch -a` also shows the ones on
+  GitHub (they start with `remotes/origin/`)
+
+### git merge <branch>
+Brings the commits from another branch into the branch I'm on right now.
+To merge a feature into main, I first `git switch main`, then
+`git merge <feature-branch>`.
+
+- Fast-forward: if main hasn't moved since the branch was made, Git just moves
+  the main label forward to the branch's latest commit
+- Merge commit: if both branches have new commits, Git makes a new commit that
+  joins them (it has two parents)
+- If both branches changed the same lines, Git stops and I choose what to keep
+
+### git branch -d <branch>
+Deletes a branch once it's merged. Only the label is removed: the commits are
+safe, because they're already part of the branch I merged them into.
+
+- If the branch is NOT merged, `-d` refuses with "not fully merged", which
+  protects me from losing work
+- `git branch -D <branch>` (capital D) forces the delete anyway. Its unmerged
+  commits are then very hard to get back
+- I can't delete the branch I'm on; I switch to another branch first
+- `git push origin --delete <branch>` deletes the branch on GitHub
