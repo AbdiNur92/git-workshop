@@ -63,6 +63,15 @@ automatically.)
 - `git remote -v` shows which URL origin points to
 - `git remote set-url origin <new-url>` changes it
 
+### git remote set-url origin <new-url>
+Changes which repository an existing remote points at. The name (`origin`)
+stays the same, only the address behind it changes, so commands like
+`git push` keep working and now go to the new repository.
+
+- I used it after cloning Lexicon's Hello-World, to point `origin` at my own
+  GitHub repository instead of Lexicon's
+- Check the result with `git remote -v`
+
 ### echo "text" > file
 Not a Git command, but a terminal (Git Bash) command I use to create files.
 `echo` prints the text, and `>` sends it into a file instead of the screen.
@@ -128,3 +137,21 @@ and becomes untracked (so a .gitignore rule for it now works).
   it from my folder
 - Older commits still contain the file. `--cached` only stops tracking it from
   now on, so it doesn't undo a secret that was already committed and pushed
+
+### ls
+Not a Git command: a terminal command that lists the files and folders in the
+current folder.
+
+- Hidden files and folders (names starting with `.`, like `.git`, `.env` and
+  `.gitignore`) are NOT shown
+- `ls -a` lists everything, hidden ones included
+
+### git clone <url>
+Downloads a full copy of a repository from GitHub to my computer, in a new
+folder named after the repository. The original on GitHub stays as it is.
+
+- It copies the whole history (every commit), not just the current files,
+  including the hidden `.git` folder
+- It sets up `origin` automatically, pointing at the URL I cloned from
+- Files that were ignored by .gitignore never get committed, so they are never
+  on GitHub and don't come with the clone
