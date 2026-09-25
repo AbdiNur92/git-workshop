@@ -1,1 +1,1 @@
-Title: Git Workshop
+Title: Learning Git
