@@ -16,18 +16,27 @@ right now, so if I edit the file again, I need to `git add` it again.
 
 - `git add <file>` stages only that file, e.g. `git add index.html`;
   other changed files are left unstaged
-- `git add .` stages every changed and new file in the folder nnnn
+- `git add .` stages every changed and new file in the folder
 
 After `git add`, `git status` shows the staged files in green under
 "Changes to be committed".
 
 ### git commit -m "message"
-Commiting what's on the stagging area and leaves a message
-Saves everything in the staging area as a new snapshot (a commit) in my local history. Each commit gets a unique ID (hash), my name, the date, and the message I write after `-m` explaining what I changed. It's important to write good messages for refrence then you know exactally what every snapshot changed and you or someone you are working with can understand it better.
+Saves everything in the staging area as a new snapshot (a commit) in my local history. Each commit gets a unique ID (hash), my name, the date, and the message I write after `-m` explaining what I changed. It's important to write good messages for reference then you know exactly what every snapshot changed and you or someone you are working with can understand it better.
+
+- `git commit -am "message"` stages and commits in one go: `-a` adds the changes
+  to every file Git already tracks, and `-m` adds the message. Brand-new
+  (untracked) files are NOT included. They still need `git add` first.
+
 ### git log --oneline
 Short form of the commit history one line per commit
-first 7 characters of the hash/commitID and commit message, Head -> Main marks the commmit I'm on and the branch I'm on origin/main shows where GitHub copy is
+first 7 characters of the hash/commitID and commit message, `HEAD -> main` marks the commit I'm on and the branch I'm on origin/main shows where GitHub copy is
 Regular git log shows the full version with the long hash, author, date, message
+
+- `git log --stat` shows each commit with the files it changed, and how many
+  lines were added (`+`) and removed (`-`) in each file. It combines with
+  other options, e.g. `git log --oneline --stat`
+
 ### git push -u origin main
 Uploads my commits on the `main` branch to GitHub (`origin`).
 
@@ -75,3 +84,47 @@ since the last commit, that means everything I've changed since that commit.
   from `git diff`
 - `git diff --staged` shows what IS staged instead: the difference between the
   staging area and the last commit (what the next commit will contain)
+- `git diff HEAD~2` compares my files now with the version from 2 commits ago.
+  `HEAD` is the commit I'm on, `HEAD~1` the one before it, `HEAD~2` the one
+  before that. It shows the combined result of all the commits in between as
+  one diff, not each commit separately (for that, use `git show` on each commit)
+
+### git show
+Shows the details of one commit: its hash, author, date and message, followed
+by the changes it made (the same `+`/`-` view as `git diff`).
+
+- `git show` or `git show HEAD` shows the newest commit
+- `git show <hash>` shows any commit (copy the hash from `git log --oneline`)
+- Press `q` to exit if the output fills the screen
+
+### git check-ignore -v <file>
+Checks whether a file or folder is ignored by Git, and if it is, shows exactly
+which rule is blocking it: the ignore file, the line number and the pattern.
+
+- `git check-ignore -v debug.log` prints `.gitignore:5:*.log  debug.log`,
+  meaning line 5 of .gitignore (`*.log`) is what ignores debug.log
+- `-v` (verbose) is what shows the rule. Without it, Git only prints the file
+  name if it's ignored
+- If the file is NOT ignored, it prints nothing
+
+### .gitignore
+A file in the project folder that lists files and folders Git should ignore.
+Ignored files don't show up in `git status` and can't be added by accident
+with `git add .`, which keeps secrets, logs and downloaded dependencies out
+of the repository. The .gitignore file itself is committed like any other file.
+
+- `.env` ignores one exact file
+- `*.log` ignores every file ending in .log, in any folder (`*` = any name)
+- `node_modules/` ignores a whole folder (the trailing `/` means folder)
+- Lines starting with `#` are comments
+
+### git rm --cached <file>
+Stops Git from tracking a file, but keeps the file in my folder. "Cached" is
+another name for the staging area (index): the file is removed from there, so
+the next commit records it as deleted from the repository. It stays on my disk
+and becomes untracked (so a .gitignore rule for it now works).
+
+- `git rm <file>` (without `--cached`) removes the file from Git AND deletes
+  it from my folder
+- Older commits still contain the file. `--cached` only stops tracking it from
+  now on, so it doesn't undo a secret that was already committed and pushed

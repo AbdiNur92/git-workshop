@@ -6,3 +6,6 @@
 
 # Dependencies (trailing / = a folder)
 node_modules/
+
+# Local settings
+settings.local
