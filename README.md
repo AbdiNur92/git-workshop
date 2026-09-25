@@ -36,6 +36,9 @@ Regular git log shows the full version with the long hash, author, date, message
 - `git log --stat` shows each commit with the files it changed, and how many
   lines were added (`+`) and removed (`-`) in each file. It combines with
   other options, e.g. `git log --oneline --stat`
+- `git log --oneline --graph` draws the history as a tree: `*` is a commit, and
+  the lines show where branches split off and where they were merged back.
+  `--all` also shows branches I'm not on
 
 ### git push -u origin main
 Uploads my commits on the `main` branch to GitHub (`origin`).
@@ -197,3 +200,31 @@ safe, because they're already part of the branch I merged them into.
   commits are then very hard to get back
 - I can't delete the branch I'm on; I switch to another branch first
 - `git push origin --delete <branch>` deletes the branch on GitHub
+
+### cat <file>
+Not a Git command: a terminal command that prints a file's contents in the
+terminal, so I can see what's inside without opening an editor.
+
+- Example: `cat title.txt` prints `Title: Git Practice`
+- Good for short files; for long ones an editor is easier
+
+### Merge conflicts
+A merge conflict happens when the two branches I'm merging both changed the
+same lines of the same file. Git can't know which version is right, so it
+stops the merge and asks me to choose. Changes to different files, or to
+different parts of one file, are combined automatically.
+
+Git marks the clash inside the file:
+
+    <<<<<<< HEAD
+    Title: Git Practice          (my branch's version)
+    =======
+    Title: Learning Git          (the other branch's version)
+    >>>>>>> new-title
+
+To solve it:
+1. Edit the file so it says what I want, and delete all the `<<<<<<<`,
+   `=======` and `>>>>>>>` lines (VS Code has "Accept Current / Incoming" buttons)
+2. `git add <file>` to mark it as solved
+3. `git commit` to finish the merge
+- `git merge --abort` cancels the merge and puts everything back as it was
